@@ -16,3 +16,25 @@
 You can view the detailed wireframe in the PDF file below:
 
 [![PDF Preview](./image.png)](./wireframe.pdf)
+
+## Tasks
+
+### Jakub
+- [x]  Initial documentation and requirements
+- [ ]  Prepare project report in doc
+- [ ]  Work on canvas and scenarios
+- [ ]  Update project description and motivation
+
+### Jirka
+- [ ]  API for data fetching
+- [ ]  Google API for maps
+- [ ]  IBM Cloud deployment
+
+### Kryštof
+- [ ]  Python backend
+- [ ]  Questions to the form
+- [ ]  Algorithm for personalization of events
+
+### Lukáš
+- [ ]  Vue.js UI implementation based on Wireframe
+

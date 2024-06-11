@@ -28,9 +28,10 @@ You can view the detailed wireframe in the PDF file below:
 ### Jirka
 - [ ]  API for data fetching
 - [ ]  Google API for maps
-- [ ]  IBM Cloud deployment
+- [ ]  Prepare IBM Cloud for deployment
 
 ### Kryštof
+- [ ]  Create app in Git repo
 - [ ]  Python backend
 - [ ]  Questions to the form
 - [ ]  Algorithm for personalization of events

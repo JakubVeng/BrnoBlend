@@ -1,0 +1,39 @@
+# only for local development
+
+version: "3"
+
+services:
+  web:
+    build:
+      context: .
+      dockerfile: docker/Containerfile
+    container_name: brnoblend_web
+    hostname: backend
+    command: "uvicorn src/app/api:app --host 0.0.0.0 --port 5020 --reload"
+    stdin_open: true
+    tty: true
+    working_dir: /opt/brno-blend
+    ports:
+      - "5020:5020"
+    volumes:
+      - .:/opt/brno-blend:z
+      - db_data:/db_data
+    depends_on:
+      - db
+    environment:
+      DATABASE_URL: "postgresql://user:password@db:5432/brnoblend"
+
+  db:
+    image: postgres:latest
+    container_name: brnoblend_db
+    environment:
+      POSTGRES_DB: brnoblend
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - db_data:/var/lib/postgresql/data
+
+volumes:
+  db_data:

@@ -1,0 +1,7 @@
+# use poetry, pipfile or linux packages directly to manage dependencies
+# but for now...
+
+fastapi
+uvicorn
+sqlalchemy
+jinja2

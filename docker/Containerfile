@@ -1,0 +1,25 @@
+# this containerfile is only for local developement
+
+FROM fedora:40
+
+RUN dnf -y update && \
+    # build deps and debug tools
+    dnf -y install htop \
+                   make \
+                   wget \
+                   net-tools \
+                   iputils \
+                   vim \
+                   mlocate \
+                   git \
+                   sudo \
+                   python3-ipdb \
+                   findutils \
+                   python3-pip \
+                   fzf \
+                   util-linux \
+    && dnf clean all
+
+
+COPY src/requirements.txt /tmp/requirements.txt
+RUN pip install -r /tmp/requirements.txt

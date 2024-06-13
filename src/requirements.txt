@@ -5,3 +5,6 @@ fastapi
 uvicorn
 sqlalchemy
 jinja2
+pydantic
+requests
+psycopg2-binary

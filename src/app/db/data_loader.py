@@ -1,5 +1,6 @@
 import requests
 
+from src.app.constants import DATA_URL_DOWNLOAD
 from src.app.db.models import Event
 
 
@@ -32,9 +33,7 @@ def parse_event(event: dict) -> dict:
     }
 
 
-def get_events() -> list[dict]:
-    # TODO: get URL dynamically
-    url = "https://stg-arcgisazurecdataprod6.az.arcgis.com/exportfiles-14243-541801/Events_-7276289897592581445.geojson?sv=2018-03-28&sr=b&sig=S9hHM1e8yrKo%2FriFWE2NyRj9M4JUw214zzoVh6dLHNY%3D&se=2024-06-13T01%3A23%3A56Z&sp=r"
+def get_events(url: str) -> list[dict]:
     response = requests.get(url)
     response.raise_for_status()
 
@@ -45,6 +44,6 @@ def get_events() -> list[dict]:
     return result
 
 
-def load_events_to_db():
-    for event in get_events():
-        Event.create(**event)
+def load_events_to_db(url: str = DATA_URL_DOWNLOAD):
+    for event in get_events(url):
+        Event.create_or_update(**event)

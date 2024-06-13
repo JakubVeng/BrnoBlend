@@ -15,7 +15,7 @@
 
 You can view the detailed wireframe in the PDF file below:
 
-[![PDF Preview](./image.png)](./wireframe.pdf)
+[![PDF Preview](files/design/image.png)](files/design/wireframe.pdf)
 
 ## Tasks
 

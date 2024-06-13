@@ -1,9 +1,9 @@
-from typing import TYPE_CHECKING
+from typing import TYPE_CHECKING, Optional
 
 from sqlalchemy import Column, Float, Integer, String, Text
 from sqlalchemy.ext.declarative import declarative_base
 
-from .db import sa_session_transaction
+from src.app.db.db import sa_session_transaction
 
 if TYPE_CHECKING:
     Base = object
@@ -27,6 +27,11 @@ class Event(Base):
     image_url = Column(String)
     event_url = Column(String)
     categories = Column(String)
+    latitude = Column(Float)
+    longitude = Column(Float)
+    date_from = Column(String)
+    date_to = Column(String)
+    first_image = Column(String)
     parent_festivals_url = Column(String, nullable=True)
     organizer_email = Column(String, nullable=True)
     tickets_url = Column(String, nullable=True)
@@ -34,18 +39,13 @@ class Event(Base):
     text_en = Column(Text, nullable=True)
     event_url_en = Column(String, nullable=True)
     tickets_url_en = Column(String, nullable=True)
-    latitude = Column(Float)
-    longitude = Column(Float)
-    date_from = Column(String)
-    date_to = Column(String)
-    first_image = Column(String)
 
     # TODO: split this... and split more of the above
     coordinates_0 = Column(Float)
     coordinates_1 = Column(Float)
 
     @classmethod
-    def create(
+    def create_or_update(
         cls,
         brno_id: int,
         name: str,
@@ -55,13 +55,6 @@ class Event(Base):
         image_url: str,
         event_url: str,
         categories: str,
-        parent_festivals_url: str,
-        organizer_email: str,
-        tickets_url: str,
-        name_en: str,
-        text_en: str,
-        event_url_en: str,
-        tickets_url_en: str,
         latitude: float,
         longitude: float,
         date_from: str,
@@ -69,9 +62,19 @@ class Event(Base):
         first_image: str,
         coordinates_0: float,
         coordinates_1: float,
-    ):
+        parent_festivals_url: Optional[str] = None,
+        organizer_email: Optional[str] = None,
+        tickets_url: Optional[str] = None,
+        name_en: Optional[str] = None,
+        text_en: Optional[str] = None,
+        event_url_en: Optional[str] = None,
+        tickets_url_en: Optional[str] = None,
+    ) -> "Event":
         with sa_session_transaction(commit=True) as session:
-            event = cls()
+            event = session.query(cls).filter(cls.brno_id == brno_id).first()
+            if not event:
+                event = cls()
+
             event.brno_id = brno_id
             event.name = name
             event.text = text

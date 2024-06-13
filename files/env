@@ -1,0 +1,7 @@
+# postgres
+POSTGRES_USER=postgres
+# honestly, who cares here...
+POSTGRES_PASSWORD=password
+POSTGRES_HOST=postgres
+POSTGRES_DB=brnoblend
+POSTGRES_PORT=5432

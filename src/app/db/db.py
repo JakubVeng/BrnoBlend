@@ -11,9 +11,11 @@ logger = logging.getLogger(__name__)
 
 def get_pg_url() -> str:
     return (
-        f"postgresql+psycopg2://{getenv('POSTGRESQL_USER')}"
-        f":{getenv('POSTGRESQL_PASSWORD')}@{getenv('POSTGRESQL_HOST', 'postgres')}"
-        f":{getenv('POSTGRESQL_PORT', '5432')}/{getenv('POSTGRESQL_DATABASE')}"
+        f"postgresql+psycopg2://{getenv('POSTGRES_USER')}"
+        f":{getenv('POSTGRES_PASSWORD')}"
+        f"@{getenv('POSTGRES_HOST')}"
+        f":{getenv('POSTGRES_PORT', '5432')}"
+        f"/{getenv('POSTGRES_DB')}"
     )
 
 

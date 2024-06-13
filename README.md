@@ -28,13 +28,13 @@ You can view the detailed wireframe in the PDF file below:
 
 ### Jirka
 
+- [x] Create app in Git repo
 - [ ] API for data fetching
 - [ ] Google API for maps
 - [ ] Prepare IBM Cloud for deployment
 
 ### Kryštof
 
-- [ ] Create app in Git repo
 - [ ] Python backend
 - [ ] Questions to the form
 - [ ] Algorithm for personalization of events

@@ -2,6 +2,6 @@
 POSTGRES_USER=postgres
 # honestly, who cares here...
 POSTGRES_PASSWORD=password
-POSTGRES_HOST=postgres
-POSTGRES_DB=brnoblend
+POSTGRES_HOST=database
+POSTGRES_DB=brnoblend_db
 POSTGRES_PORT=5432

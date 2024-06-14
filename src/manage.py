@@ -1,7 +1,10 @@
-#!/usr/bin/python3
+#! /usr/bin/python3
 from typing import Optional
 
 import click
+
+from src.app.db.db import engine
+from src.app.db.models import Base
 
 # CLI tool to invoke commands to the application and database from commandline
 
@@ -26,6 +29,14 @@ def refresh_events(url: Optional[str] = None):
         load_events_to_db(url)
     else:
         load_events_to_db()
+
+
+@manage.command()
+def create_db():
+    """
+    Create the database schema.
+    """
+    Base.metadata.create_all(engine)
 
 
 if __name__ == "__main__":

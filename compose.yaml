@@ -8,32 +8,40 @@ services:
       context: .
       dockerfile: docker/Containerfile
     container_name: brnoblend_web
-    hostname: backend
-    command: "uvicorn src/app/api:app --host 0.0.0.0 --port 5020 --reload"
+    hostname: web
+    command: "uvicorn src.app.api:app --host 0.0.0.0 --port 5020 --reload"
     stdin_open: true
     tty: true
-    working_dir: /opt/brno-blend
+    working_dir: /opt/brno-blend/src
     ports:
       - "5020:5020"
     volumes:
       - .:/opt/brno-blend:z
-      - db_data:/db_data
     environment:
       - PYTHONPATH=/opt/brno-blend
     env_file:
       - "files/env"
     depends_on:
-      - db
+      - database
 
-  db:
-    image: postgres:latest
+  database:
+    image: postgres:alpine
     container_name: brnoblend_db
-    ports:
-      - "5432:5432"
+    hostname: database
+    restart: always
     env_file:
       - "files/env"
     volumes:
-      - db_data:/var/lib/postgresql/data
+      - database:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+
+  adminer:
+    image: adminer:latest
+    container_name: adminer
+    restart: always
+    ports:
+      - "8080:8080"
 
 volumes:
-  db_data:
+  database:

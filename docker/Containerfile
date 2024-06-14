@@ -1,6 +1,10 @@
 # this containerfile is only for local developement
+# context is git root
 
 FROM fedora:40
+
+ENV PYTHONDONTWRITEBYTECODE 1
+ENV PYTHONUNBUFFERED 1
 
 RUN dnf -y update && \
     # build deps and debug tools
@@ -23,3 +27,9 @@ RUN dnf -y update && \
 
 COPY src/requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
+
+COPY src /src
+WORKDIR /src
+
+CMD ["python3", "manage.py", "create-db"]
+RUN rm -rf /src

@@ -9,8 +9,7 @@ services:
       dockerfile: docker/Containerfile
     container_name: brnoblend_web
     hostname: web
-    command: "/bin/bash"
-    #command: "uvicorn src.app.api:app --host 0.0.0.0 --port 5020 --reload"
+    command: "uvicorn src.app.api:app --host 0.0.0.0 --port 5020 --reload"
     stdin_open: true
     tty: true
     working_dir: /opt/brno-blend/src

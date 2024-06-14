@@ -1,0 +1,29 @@
+{% extends "layout.html" %} {%block content %}
+
+<div class="container mt-5" id="main-box">
+  <h1>Tell Us About Your Preferences</h1>
+  <form action="/results" method="post">
+    <!-- TODO: these are example question... replace them -->
+    <div class="mb-3">
+      <label for="category" class="form-label">Favorite Event Category</label>
+      <select id="category" class="form-select" name="category">
+        <option value="music">Music</option>
+        <option value="sports">Sports</option>
+        <option value="arts">Arts</option>
+        <option value="technology">Technology</option>
+        <option value="food">Food & Drink</option>
+      </select>
+    </div>
+    <div class="mb-3">
+      <label for="location" class="form-label">Preferred Location</label>
+      <input type="text" id="location" class="form-control" name="location" />
+    </div>
+    <div class="mb-3">
+      <label for="date" class="form-label">Preferred Date</label>
+      <input type="date" id="date" class="form-control" name="date" />
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+  </form>
+</div>
+
+{% endblock %}

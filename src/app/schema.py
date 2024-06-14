@@ -1,5 +1,6 @@
 from typing import Optional
 
+from fastapi.params import Form
 from pydantic import BaseModel
 
 
@@ -29,3 +30,16 @@ class Event(BaseModel):
 
     class Config:
         orm_mode = True
+
+
+class PreferencesForm(BaseModel):
+    # TODO: add preferences questions
+    category: str
+    location: str
+    date: str
+
+    @classmethod
+    def as_form(
+        cls, category: str = Form(...), location: str = Form(...), date: str = Form(...)
+    ) -> "PreferencesForm":
+        return cls(category=category, location=location, date=date)

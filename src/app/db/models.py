@@ -13,7 +13,7 @@ else:
 
 # description of attributes is here
 # https://data.brno.cz/datasets/mestobrno::akce-events/about
-class Event(Base):
+class EventModel(Base):
     __tablename__ = "events"
     id = Column(Integer, primary_key=True)
 
@@ -40,7 +40,7 @@ class Event(Base):
     event_url_en = Column(String, nullable=True)
     tickets_url_en = Column(String, nullable=True)
 
-    # TODO: split this... and split more of the above
+    # TODO: split this... and split more of the above perhaps
     coordinates_0 = Column(Float)
     coordinates_1 = Column(Float)
 
@@ -69,7 +69,7 @@ class Event(Base):
         text_en: Optional[str] = None,
         event_url_en: Optional[str] = None,
         tickets_url_en: Optional[str] = None,
-    ) -> "Event":
+    ) -> "EventModel":
         with sa_session_transaction(commit=True) as session:
             event = session.query(cls).filter(cls.brno_id == brno_id).first()
             if not event:

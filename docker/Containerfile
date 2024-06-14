@@ -28,8 +28,10 @@ RUN dnf -y update && \
 COPY src/requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
 
-COPY src /src
-WORKDIR /src
+#COPY src /tmp_project/src
+#WORKDIR /tmp_project/src
 
-CMD ["python3", "manage.py", "create-db"]
-RUN rm -rf /src
+#ENV PYTHONPATH /tmp_project
+
+#RUN ./manage.py create-db
+#RUN rm -rf /src

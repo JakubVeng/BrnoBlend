@@ -1,7 +1,7 @@
 import requests
 
 from src.app.constants import DATA_URL_DOWNLOAD
-from src.app.db.models import Event
+from src.app.db.models import EventModel
 
 
 def parse_event(event: dict) -> dict:
@@ -45,5 +45,6 @@ def get_events(url: str) -> list[dict]:
 
 
 def load_events_to_db(url: str = DATA_URL_DOWNLOAD):
+    # TODO: get the url dynamically if not provided as an argument (remove the default value)
     for event in get_events(url):
-        Event.create_or_update(**event)
+        EventModel.create_or_update(**event)

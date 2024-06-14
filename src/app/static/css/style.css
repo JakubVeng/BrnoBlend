@@ -1,0 +1,167 @@
+/* TODO: The page sometimes glitches and some parts render weirdly... is it bug here or just firefox doing shit? */
+
+:root {
+  --darkblue: #294172;
+  --blue: #3c6eb4;
+  --newblue: #51a2da;
+  --green: #38bc3b;
+  --lightgreen: #afea85;
+  --magenta: #db3279;
+  --orange: #eb7434;
+  --purple: #603e79;
+  --lightpurple: #cfbddd;
+
+  --white: #f8f9fa;
+  --gray-0: #eff0f1;
+  --gray-1: #dfe0e3;
+  --gray-2: #dedede;
+  --gray-3: #c5c7cc;
+  --gray-4: #8c8c8c;
+  --gray-5: #9a9fa6;
+  --gray-6: #79818b;
+  --gray-7: #535961;
+  --gray-8: #4c4c4c;
+  --gray-9: #1d252e;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  background-color: var(--gray-0);
+  color: var(--gray-7);
+}
+
+.container {
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  color: var(--darkblue);
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+h2 {
+  color: var(--green);
+}
+
+h3 {
+  color: var(--gray-6);
+  font-size: 1.5rem;
+  margin-bottom: 20px;
+}
+
+p {
+  color: var(--gray-7);
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.btn-primary {
+  border-color: var(--newblue);
+  background-color: var(--newblue);
+  color: var(--white);
+  font-size: 1.1rem;
+  padding: 10px 20px;
+  margin-top: 20px;
+}
+
+.btn-primary:hover {
+  background-color: var(--blue);
+  border-color: var(--blue);
+}
+
+#menu {
+  background-color: var(--newblue);
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
+#menu > .container {
+  max-width: 1700px;
+}
+
+#menu #logo {
+  height: 50px;
+  filter: invert(100%) sepia(96%) saturate(15%) hue-rotate(212deg)
+    brightness(104%) contrast(104%);
+}
+
+.nav-link {
+  font-weight: 500;
+  --bs-nav-link-color: var(--newblue);
+  --bs-nav-link-hover-color: var(--newblue);
+  --bs-nav-tabs-link-active-bg: var(--white);
+  --bs-nav-tabs-link-active-border-color: var(--gray-3);
+}
+
+a,
+a:hover {
+  font-weight: 500;
+  color: var(--newblue);
+}
+
+#welcome {
+  justify-content: center;
+  align-items: center;
+  background-color: var(--white);
+  margin: 0;
+  padding: 0;
+  color: var(--gray-7);
+  max-width: 600px;
+  margin: 80px auto;
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+#main-box {
+  background-color: var(--white);
+  color: var(--gray-7);
+  padding: 30px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.event-card {
+  margin-bottom: 20px;
+}
+
+.map-container {
+  width: 100%;
+  height: 400px;
+  margin-top: 30px;
+}
+
+.collapse {
+  margin-top: 10px;
+}
+
+.more-details-btn {
+  margin-top: 10px;
+}
+
+.footer {
+  color: #fff;
+  padding: 10px 0;
+  text-align: center;
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 0 10px;
+  }
+
+  .nav-links {
+    flex-direction: column;
+    gap: 10px;
+    text-align: center;
+  }
+
+  .nav-links li {
+    margin: 5px 0;
+  }
+}

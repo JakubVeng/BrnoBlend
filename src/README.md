@@ -10,13 +10,26 @@ To run the app you need to run it inside container (if locally on your machine, 
 own with resolving dependencies, running all the services, etc). In the root of git repo, run:
 
 ```bash
+# with make - this chooses podman on docker depending what's on ur system
+$ make app-up
+# or with compose - if you have docker then use docker-compose instead
 $ podman-compose up -d
+```
+
+To shutdown app
+
+```bash
+$ make app-down
+# or with compose - if you have docker then use docker-compose instead
+$ podman-compose down
 ```
 
 To enter running container with python API, run:
 
 ```bash
 $ make enter-container
+# or manually with docker/podman
+$ podman exec -it brnoblend_web bash
 ```
 
 Then you need to create tables inside container (this can be done in Containerfile...

@@ -1,30 +1,42 @@
+let map;
+let marker;
+
+// Function to initialize Google Map
 function initMap() {
-  const map = new google.maps.Map(document.getElementById("map"), {
-    zoom: 12,
-    center: { lat: 49.1951, lng: 16.6068 },
+  map = new google.maps.Map(document.getElementById("map"), {
+    center: { lat: 0, lng: 0 }, // Default center if no events are loaded
+    zoom: 10, // Adjust zoom level as needed
+  });
+}
+
+// Function to show event details and map
+function showEventDetails(name, text, categories, latitude, longitude) {
+  // Set modal title and event details
+  document.getElementById("eventDetailsModalLabel").innerText = name;
+  const detailsList = document.getElementById("eventDetailsList");
+  detailsList.innerHTML = `
+    <li><strong>Text:</strong> ${text}</li>
+    <li><strong>Categories:</strong> ${categories}</li>
+  `;
+
+  // Initialize map with event coordinates
+  const eventCoords = { lat: parseFloat(latitude), lng: parseFloat(longitude) };
+  map.setCenter(eventCoords); // Center map on event location
+  map.setZoom(14); // Set zoom level for event
+
+  // Remove previous marker if exists
+  if (marker) {
+    marker.setMap(null);
+  }
+
+  // Add marker for event location
+  marker = new google.maps.Marker({
+    position: eventCoords,
+    map: map,
+    title: name,
   });
 
-  const events = JSON.parse(document.getElementById("events-data").textContent);
-
-  events.forEach((event) => {
-    const marker = new google.maps.Marker({
-      position: { lat: event.latitude, lng: event.longitude },
-      map: map,
-      title: event.name,
-    });
-
-    const infoWindow = new google.maps.InfoWindow({
-      content: `
-                <div>
-                    <h5>${event.name}</h5>
-                    <p>${event.description}</p>
-                    <p><small>${event.date}</small></p>
-                </div>
-            `,
-    });
-
-    marker.addListener("click", function () {
-      infoWindow.open(map, marker);
-    });
-  });
+  // Open the modal
+  const eventDetailsModal = new bootstrap.Modal(document.getElementById("eventDetailsModal"));
+  eventDetailsModal.show();
 }

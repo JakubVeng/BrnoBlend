@@ -4,6 +4,10 @@ The dependencies are in `requirements.txt` for now. Use venv to create virtual e
 for writing the code locally (for IDEs). Don't screw your system python :D. Later I'll
 add pipenv or something that natively creates venv.
 
+#### Install all packages
+
+pip install -U -r src/requirements.txt
+
 ### Running the app
 
 To run the app you need to run it inside container (if locally, you are on your own with

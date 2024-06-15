@@ -4,32 +4,23 @@ The dependencies are in `requirements.txt` for now. Use venv to create virtual e
 for writing the code locally (for IDEs). Don't screw your system python :D. Later I'll
 add pipenv or something that natively creates venv.
 
+#### Install all packages
+
+pip install -U -r src/requirements.txt
+
 ### Running the app
 
-To run the app you need to run it inside container (if locally on your machine, you are on your
-own with resolving dependencies, running all the services, etc). In the root of git repo, run:
+To run the app you need to run it inside container (if locally, you are on your own with
+resolving dependencies, running all the services, etc). In the root of git repo, run:
 
 ```bash
-# with make - this chooses podman on docker depending what's on ur system
-$ make app-up
-# or with compose - if you have docker then use docker-compose instead
 $ podman-compose up -d
-```
-
-To shutdown app
-
-```bash
-$ make app-down
-# or with compose - if you have docker then use docker-compose instead
-$ podman-compose down
 ```
 
 To enter running container with python API, run:
 
 ```bash
 $ make enter-container
-# or manually with docker/podman
-$ podman exec -it brnoblend_web bash
 ```
 
 Then you need to create tables inside container (this can be done in Containerfile...

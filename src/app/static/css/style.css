@@ -122,14 +122,30 @@ a:hover {
   border-radius: 8px;
 }
 
+.modal-dialog {
+  width: 700px;
+  max-width: 95%;
+}
+
+#categories {
+  min-height: 200px;
+}
+
+#eventDetailsList {
+  margin-top: 20px;
+}
+
 .event-card {
   margin-bottom: 20px;
+}
+
+.event-card .card {
+  height: 100%;
 }
 
 .map-container {
   width: 100%;
   height: 400px;
-  margin-top: 30px;
 }
 
 .collapse {
@@ -137,15 +153,13 @@ a:hover {
 }
 
 .more-details-btn {
-  margin-top: 10px;
+  margin-bottom: 15px;
 }
 
 .footer {
   color: #fff;
   padding: 10px 0;
   text-align: center;
-  position: absolute;
-  bottom: 0;
   width: 100%;
   height: 2.5rem;
 }

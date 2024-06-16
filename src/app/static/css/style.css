@@ -1,5 +1,5 @@
 /* TODO: The page sometimes glitches and some parts render weirdly... is it bug here or just firefox doing shit? */
-
+/* Lukas update: I've never experienced any problems like that, even in Firefox it works fine */
 :root {
   --darkblue: #294172;
   --blue: #3c6eb4;
@@ -82,8 +82,13 @@ p {
 
 #menu #logo {
   height: 50px;
-  filter: invert(100%) sepia(96%) saturate(15%) hue-rotate(212deg)
-    brightness(104%) contrast(104%);
+  filter: invert(100%) sepia(96%) saturate(15%) hue-rotate(212deg) brightness(300%);
+}
+
+#menu .navbar-brand {
+  display: flex;
+  gap: 10px;
+  align-items: center;
 }
 
 .nav-link {

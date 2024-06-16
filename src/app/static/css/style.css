@@ -11,7 +11,7 @@
   --purple: #603e79;
   --lightpurple: #cfbddd;
 
-  --white: #f8f9fa;
+  --white: #ffffff;
   --gray-0: #eff0f1;
   --gray-1: #dfe0e3;
   --gray-2: #dedede;
@@ -26,7 +26,7 @@
 
 body {
   font-family: Arial, sans-serif;
-  background-color: var(--gray-0);
+  background-color: #f1f1f7ad;
   color: var(--gray-7);
 }
 
@@ -141,11 +141,18 @@ a:hover {
 
 .event-card .card {
   height: 100%;
+  box-shadow: 0 0 7px 0px #00000020;
 }
 
 .map-container {
   width: 100%;
   height: 400px;
+}
+
+#results-map {
+  height: 400px;
+  width: 100%;
+  margin-bottom: 25px;
 }
 
 .collapse {

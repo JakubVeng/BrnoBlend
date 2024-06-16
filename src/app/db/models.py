@@ -97,5 +97,6 @@ class EventModel(Base):
             event.first_image = first_image
             event.coordinates_0 = coordinates_0
             event.coordinates_1 = coordinates_1
+            
             session.add(event)
             return event

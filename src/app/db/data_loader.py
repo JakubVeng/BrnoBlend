@@ -31,9 +31,8 @@ def parse_event(event: dict) -> dict:
         "coordinates_0": geometry["coordinates"][0],
         "coordinates_1": geometry["coordinates"][1],
     }
-
-
-def get_events(url: str) -> list[dict]:
+    
+def get_events(url: str = DATA_URL_DOWNLOAD) -> list[dict]:
     response = requests.get(url)
     response.raise_for_status()
 
@@ -45,6 +44,5 @@ def get_events(url: str) -> list[dict]:
 
 
 def load_events_to_db(url: str = DATA_URL_DOWNLOAD):
-    # TODO: get the url dynamically if not provided as an argument (remove the default value)
     for event in get_events(url):
         EventModel.create_or_update(**event)

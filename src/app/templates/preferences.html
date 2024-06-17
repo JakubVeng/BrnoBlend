@@ -1,14 +1,14 @@
-{% extends "layout.html" %}
-
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 <div class="container mt-5" id="main-box">
   <h1>Tell Us About Your Preferences</h1>
   <form action="/results" method="post">
     <div class="mb-3">
-      <label for="categories" class="form-label">Favorite Event Categories</label>
+      <label for="categories" class="form-label"
+        >Favorite Event Categories</label
+      >
       <select id="categories" class="form-select" name="categories" multiple>
         {% for category in categories %}
-          <option value="{{ category }}">{{ category }}</option>
+        <option value="{{ category }}">{{ category }}</option>
         {% endfor %}
       </select>
     </div>
@@ -22,7 +22,14 @@
     </div>
     <div class="mb-3">
       <label for="limit" class="form-label">Events limit</label>
-      <input type="number" id="limit" class="form-control" name="limit" min="1" value="20" />
+      <input
+        type="number"
+        id="limit"
+        class="form-control"
+        name="limit"
+        min="1"
+        value="20"
+      />
     </div>
     <button type="submit" class="btn btn-primary">Submit</button>
   </form>

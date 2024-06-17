@@ -1,5 +1,5 @@
-import logging
 import html
+import logging
 from typing import Optional
 
 from fastapi import FastAPI, Form, HTTPException, Request
@@ -31,6 +31,7 @@ async def home(request: Request):
     """
     return templates.TemplateResponse("welcome.html", {"request": request})
 
+
 @app.post("/update-events")
 def update_events():
     try:
@@ -41,7 +42,11 @@ def update_events():
             api_event_dict = {event["brno_id"]: event for event in events_from_api}
 
             # Delete events not present in the API response
-            events_to_delete = session.query(EventModel).filter(~EventModel.brno_id.in_(api_event_dict.keys())).all()
+            events_to_delete = (
+                session.query(EventModel)
+                .filter(~EventModel.brno_id.in_(api_event_dict.keys()))
+                .all()
+            )
             for event in events_to_delete:
                 session.delete(event)
 
@@ -72,7 +77,9 @@ async def get_preferences(request: Request):
     """
     with sa_session_transaction() as session:
         categories = get_categories_from_db(session)
-        return templates.TemplateResponse("preferences.html", {"request": request, "categories": categories})
+        return templates.TemplateResponse(
+            "preferences.html", {"request": request, "categories": categories}
+        )
 
 
 def model_to_dict(obj):
@@ -91,22 +98,24 @@ async def get_results(
     categories: list[str] = Form(...),
     # location: str = Form(...),
     date: Optional[str] = Form(None),
-    limit: int = Form(...)
+    limit: int = Form(...),
 ):
     preferences_form = PreferencesForm(categories=categories, date=date, limit=limit)
     matcher = Preferencator3000(preferences_form)
 
     events = matcher.match_events()
-    
+
     # Format the html-encoded titles...
     for event in events:
-        event.name = html.unescape(event.name)  
+        event.name = html.unescape(event.name)
 
     # Convert events to dictionaries for the #results-map to decode them
     events_dicts = [model_to_dict(event) for event in events]
-    
 
-    return templates.TemplateResponse("results.html", {"request": request, "events": events_dicts})
+    return templates.TemplateResponse(
+        "results.html", {"request": request, "events": events_dicts}
+    )
+
 
 @app.get("/about", response_class=HTMLResponse)
 async def about(request: Request):

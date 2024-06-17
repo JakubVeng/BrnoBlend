@@ -1,23 +1,24 @@
 // Initialize the "load events" button
-document.getElementById('loadEventsButton').addEventListener('click', async () => {
-  try {
-    const response = await fetch('/update-events', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
-    if (!response.ok) {
-      throw new Error('Failed to load new events');
+document
+  .getElementById("loadEventsButton")
+  .addEventListener("click", async () => {
+    try {
+      const response = await fetch("/update-events", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      if (!response.ok) {
+        throw new Error("Failed to load new events");
+      }
+      alert("New events loaded successfully");
+      // Optionally, refresh the page or update the UI as needed
+    } catch (error) {
+      console.error("Error loading new events:", error);
+      alert("Failed to load new events");
     }
-    alert('New events loaded successfully');
-    // Optionally, refresh the page or update the UI as needed
-  } catch (error) {
-    console.error('Error loading new events:', error);
-    alert('Failed to load new events');
-  }
-});
-
+  });
 
 let map;
 let marker;
@@ -41,12 +42,15 @@ function initMaps() {
 
   // Add markers for all events on the results map
   const events = JSON.parse(eventsData);
-  events.forEach(event => {
-    const eventCoords = { lat: parseFloat(event.latitude), lng: parseFloat(event.longitude) };
+  events.forEach((event) => {
+    const eventCoords = {
+      lat: parseFloat(event.latitude),
+      lng: parseFloat(event.longitude),
+    };
     const eventMarker = new google.maps.Marker({
       position: eventCoords,
       map: resultsMap,
-      title: event.name,  
+      title: event.name,
     });
 
     eventMarker.addListener("click", () => {
@@ -68,7 +72,7 @@ function initMaps() {
   // Adjust the center and zoom level of the results map to fit all markers
   if (markers.length > 0) {
     const bounds = new google.maps.LatLngBounds();
-    markers.forEach(marker => bounds.extend(marker.getPosition()));
+    markers.forEach((marker) => bounds.extend(marker.getPosition()));
     resultsMap.fitBounds(bounds);
   }
 }
@@ -101,6 +105,8 @@ function showEventDetails(name, text, categories, latitude, longitude) {
   });
 
   // Open the modal
-  const eventDetailsModal = new bootstrap.Modal(document.getElementById("eventDetailsModal"));
+  const eventDetailsModal = new bootstrap.Modal(
+    document.getElementById("eventDetailsModal"),
+  );
   eventDetailsModal.show();
 }

@@ -1,6 +1,4 @@
-{% extends "layout.html" %}
-
-{% block content %}
+{% extends "layout.html" %} {% block content %}
 <div class="container mt-5" id="main-box">
   <div class="row">
     <div class="col">
@@ -8,10 +6,13 @@
       <p>Here are the events that match your preferences:</p>
     </div>
     <div class="col d-flex justify-content-end">
-      <button id="loadEventsButton" class="btn btn-primary my-auto">Resync database from API</button>
+      <button id="loadEventsButton" class="btn btn-primary my-auto">
+        Resync database from API
+      </button>
     </div>
   </div>
-  <div id="results-map"></div> <!-- Adjust the height as needed -->
+  <div id="results-map"></div>
+  <!-- Adjust the height as needed -->
   <div class="row">
     {% for event in events %}
     <div class="col-md-4 event-card">
@@ -45,15 +46,30 @@
 </div>
 
 <!-- Modal for event details -->
-<div class="modal fade" id="eventDetailsModal" tabindex="-1" aria-labelledby="eventDetailsModalLabel" aria-hidden="true">
+<div
+  class="modal fade"
+  id="eventDetailsModal"
+  tabindex="-1"
+  aria-labelledby="eventDetailsModalLabel"
+  aria-hidden="true"
+>
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="eventDetailsModalLabel">Event Details</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
       </div>
       <div class="modal-body">
-        <div id="map" class="map-container" style="height: 300px; width: 100%;"></div>
+        <div
+          id="map"
+          class="map-container"
+          style="height: 300px; width: 100%"
+        ></div>
         <ul id="eventDetailsList">
           <!-- Details will be dynamically filled using JavaScript -->
         </ul>
@@ -64,10 +80,14 @@
 
 <!-- Embedding the events data into a JavaScript variable -->
 <script>
-  const eventsData = '{{ events | tojson | safe }}';
+  const eventsData = "{{ events | tojson | safe }}";
 </script>
 
 <script src="/static/js/results.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmXMSNnE2IreFJTG6rQefzqANnmhBeNWY&callback=initMaps" async defer></script>
+<script
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmXMSNnE2IreFJTG6rQefzqANnmhBeNWY&callback=initMaps"
+  async
+  defer
+></script>
 
 {% endblock %}

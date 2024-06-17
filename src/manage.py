@@ -6,9 +6,11 @@ import click
 from src.app.db.db import engine
 from src.app.db.models import Base
 
+
 @click.group()
 def manage():
     pass
+
 
 @manage.command()
 @click.option("--url", default=None, help="URL to fetch events from")
@@ -26,12 +28,14 @@ def refresh_events(url: Optional[str] = None):
     else:
         load_events_to_db()
 
+
 @manage.command()
 def create_db():
     """
     Create the database schema.
     """
     Base.metadata.create_all(engine)
+
 
 if __name__ == "__main__":
     manage()

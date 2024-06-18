@@ -7,7 +7,6 @@ from fastapi import FastAPI, Form, HTTPException, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
-from sqlalchemy import inspect
 
 from src.app.db.data_loader import get_events
 from src.app.db.db import sa_session_transaction
@@ -68,7 +67,7 @@ def get_categories_from_db(db_session):
     for category in categories:
         if category.categories:
             unique_categories.update(category.categories.split(", "))
-    return list(unique_categories)
+    return sorted(list(unique_categories))
 
 
 @app.get("/preferences", response_class=HTMLResponse)
@@ -82,22 +81,6 @@ async def get_preferences(request: Request):
             "preferences.html", {"request": request, "categories": categories}
         )
 
-
-def model_to_dict(obj):
-    """
-    Convert SQLAlchemy model instance to dictionary.
-    """
-    return {c.key: getattr(obj, c.key) for c in inspect(obj).mapper.column_attrs}
-
-
-def format_unix_timestamp(timestamp):
-    try:
-        timestamp = int(timestamp)
-        timestamp = timestamp // 1000  # Convert from milliseconds to seconds
-        return datetime.utcfromtimestamp(timestamp).strftime("%Y-%m-%d %H:%M")
-    except (ValueError, OverflowError) as e:
-        print(f"Error converting timestamp: {timestamp} - {e}")
-        return None
 
 
 # TODO: yes forms in FastAPI needs to be as post requests. If something breaks or is not working

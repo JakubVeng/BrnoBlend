@@ -10,6 +10,7 @@
     ec2_user: ubuntu
     nginx_server_name: 18.199.89.155
     repo_dest: "/home/{{ ec2_user }}/brno-blend"
+    user_service_dir: "/home/{{ ec2_user }}/.config/systemd/user"
 
   tasks:
     - name: Install tools for server to be able to run web service
@@ -31,6 +32,14 @@
           - vim
           - htop
 
+    - name: Ensure systemd user directory exists
+      file:
+        path: "{{ user_service_dir }}"
+        state: directory
+        mode: "0755"
+        owner: "{{ ec2_user }}"
+        group: "{{ ec2_user }}"
+
     - name: Clone or update git repository
       git:
         repo: "https://github.com/JakubVeng/BrnoBlend.git"
@@ -45,14 +54,15 @@
       become: true
       copy:
         src: "brno-blend.service"
-        dest: "/etc/systemd/system/brno-blend.service"
+        dest: "{{ user_service_dir }}/brno-blend.service"
         force: true
       when: git_result.changed
 
-    - name: Reload systemd
-      become: true
+    - name: Reload systemd user daemon
       service:
+        scope: user
         daemon_reload: true
+      when: git_result.changed
       notify:
         - Restart application if necessary
 

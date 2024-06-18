@@ -31,19 +31,25 @@
           - vim
           - htop
 
-    - name: Check if the git repo exists
-      stat:
-        path: "{{ repo_dest }}"
-      register: repo_dir
-
     - name: Clone or update git repository
       git:
         repo: "https://github.com/JakubVeng/BrnoBlend.git"
         dest: "{{ repo_dest }}"
         version: "main"
         force: true
+      register: git_result
       notify:
         - Restart application if necessary
+
+    - name: Copy systemd service file
+      become: true
+      copy:
+        src: "brno-blend.service"
+        dest: "/etc/systemd/system/brno-blend.service"
+        force: true
+      when: git_result.changed
+      notify:
+        - Reload systemd if necessary
 
     - name: Ensure nginx service is running
       become: true
@@ -62,11 +68,17 @@
         - Restart nginx
 
   handlers:
+    - name: Reload systemd if necessary
+      become: true
+      systemd:
+        daemon_reload: true
+      notify:
+        - Restart application if necessary
+
     - name: Restart application if necessary
-      command:
-        cmd: "make restart-app"
-        chdir: "{{ repo_dest }}"
-      when: repo_dir.stat.exists
+      systemd:
+        name: brno-blend
+        state: restarted
 
     - name: Restart nginx
       become: true

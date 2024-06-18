@@ -1,0 +1,14 @@
+[Unit]
+Description=Brno Blend Web Application Service
+After=network.target
+
+[Service]
+User=ubuntu
+WorkingDirectory=/home/ubuntu/brno-blend
+ExecStart=/usr/bin/make app-up
+ExecStop=/usr/bin/make app-down
+ExecRestart=/usr/bin/make restart-app
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -106,7 +106,6 @@ def format_unix_timestamp(timestamp):
 async def get_results(
     request: Request,
     categories: list[str] = Form(...),
-    # location: str = Form(...),
     date: Optional[str] = Form(None),
     limit: int = Form(...),
 ):
@@ -120,10 +119,21 @@ async def get_results(
         event.name = html.unescape(event.name)
         event.date_from = datetime.utcfromtimestamp(int(event.date_from) // 1000).strftime('%d.%m.%Y')
         event.date_to = datetime.utcfromtimestamp(int(event.date_to) // 1000).strftime('%d.%m.%Y')
-        print(event.date_from)
 
-    # Convert events to dictionaries for the #results-map to decode them
-    events_dicts = [model_to_dict(event) for event in events]
+    # Convert events to dictionaries for the results-map to decode them
+    # Filter out only the required fields
+    events_dicts = [
+        {
+            "date_from": event.date_from,
+            "date_to": event.date_to,
+            "name": event.name,
+            "categories": event.categories,
+            "text": event.text,
+            "latitude": event.latitude,
+            "longitude": event.longitude
+        }
+        for event in events
+    ]
 
     return templates.TemplateResponse(
         "results.html", {"request": request, "events": events_dicts}

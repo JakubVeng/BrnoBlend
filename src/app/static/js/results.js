@@ -41,7 +41,6 @@ function initMaps() {
   });
 
   // Add markers for all events on the results map
-  console.log('parsing eventsData')
   const events = JSON.parse(eventsData);
   events.forEach((event) => {
     const eventCoords = {

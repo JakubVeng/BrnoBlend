@@ -1,4 +1,5 @@
-from sqlalchemy import or_
+from datetime import datetime, timezone
+from sqlalchemy import Integer, Numeric, cast, func, or_
 
 from src.app.db.db import sa_session_transaction  # Adjust import as per your setup
 from src.app.db.models import EventModel  # Adjust import as per your actual model
@@ -28,8 +29,17 @@ class Preferencator3000:
             #     query = query.filter(EventModel.location.ilike(f"%{self.preferences.location}%"))
 
             if self.preferences and self.preferences.date:
-                query = query.filter(EventModel.date_from <= self.preferences.date)
-                query = query.filter(EventModel.date_to >= self.preferences.date)
+                # Convert self.preferences.date string to datetime object
+                date_obj = datetime.strptime(self.preferences.date, '%Y-%m-%d')
+
+                # Convert date_obj to milliseconds since epoch
+                date_timestamp = int(date_obj.replace(tzinfo=timezone.utc).timestamp() * 1000)
+
+                # Cast EventModel.date_from and date_to to Numeric for precise comparison
+                date_from_casted = cast(EventModel.date_from, Numeric)
+                date_to_casted = cast(EventModel.date_to, Numeric)
+                query = query.filter(date_from_casted <= date_timestamp)
+                query = query.filter(date_to_casted >= date_timestamp)
 
             if self.preferences and self.preferences.limit:
                 query = query.limit(self.preferences.limit)

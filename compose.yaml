@@ -23,7 +23,7 @@ services:
       - database
 
   database:
-    image: postgres:alpine
+    image: docker.io/postgres:alpine
     container_name: brnoblend_db
     hostname: database
     restart: always
@@ -35,7 +35,7 @@ services:
       - "5432:5432"
 
   adminer:
-    image: adminer:latest
+    image: docker.io/adminer:latest
     container_name: adminer
     restart: always
     ports:

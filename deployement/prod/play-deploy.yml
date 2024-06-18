@@ -1,7 +1,7 @@
 ---
 # run this playbook with:
 # ansible-playbook -i "$nginx_server_name," ./play-deploy.yml \
-#   --private-key ./brno-blend-key.pem -u ec2-user
+#   --private-key ./brno-blend-key.pem -u ubuntu
 
 - name: Deploy BrnoBlend to production
   hosts: all

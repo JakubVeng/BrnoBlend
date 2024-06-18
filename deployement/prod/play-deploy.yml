@@ -90,6 +90,17 @@
         enabled: true
         masked: false
 
+    - name: Check if lingering is enabled
+      become: true
+      command: loginctl show-user {{ ec2_user }} --property=Linger
+      register: linger_check
+      changed_when: false
+
+    - name: Enable lingering for user
+      become: true
+      command: loginctl enable-linger {{ ec2_user }}
+      when: linger_check.stdout != "Linger=yes"
+
   handlers:
     - name: Restart application if necessary
       service:

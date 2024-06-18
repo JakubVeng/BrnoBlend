@@ -1,0 +1,71 @@
+---
+# run this playbook with:
+# ansible-playbook -i "$nginx_server_name," ./prepare-s390x-builder-to-create-images.yml \
+#   --private-key ./brno-blend-key.pem -u ec2-user
+
+- name: Deploy BrnoBlend to production
+  hosts: all
+  become: true
+  user: root
+
+  vars:
+    ec2_user: ec2-user
+    nginx_server_name: 3.79.116.184
+
+  tasks:
+    - name: Install tools for server to be able to run web service
+      package:
+        state: present
+        name:
+          - podman
+          - podman-compose
+          - git
+          - make
+          - nginx
+
+    - name: Install debug tools
+      package:
+        state: present
+        name:
+          - vim
+          - htop
+
+    - name: Check if the git repo exists
+      stat:
+        path: "/opt/brno-blend"
+      register: repo_dir
+
+    - name: Clone or update git repository
+      git:
+        repo: "https://github.com/JakubVeng/BrnoBlend.git"
+        dest: "/opt/brno-blend"
+        version: "main"
+        force: true
+      notify:
+        - Restart application if necessary
+
+    - name: Ensure nginx service is running
+      service:
+        name: nginx
+        state: started
+        enabled: true
+        masked: false
+
+    - name: Template nginx file
+      template:
+        src: "nginx.conf.j2"
+        dest: "/etc/nginx/sites-enabled/brno-blend-nginx.conf"
+      notify:
+        - Restart nginx
+
+  handlers:
+    - name: Restart application if necessary
+      command:
+        cmd: "make restart"
+        chdir: "/opt/brno-blend"
+      when: repo_dir.stat.exists
+
+    - name: Restart nginx
+      service:
+        name: nginx
+        state: restarted

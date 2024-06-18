@@ -19,3 +19,6 @@ app-up:
 
 app-down:
 	$(COMPOSE) down
+
+restart-app:
+	$(COMPOSE) restart

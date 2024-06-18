@@ -1,4 +1,3 @@
-# this containerfile is only for local developement
 # context is git root
 
 FROM fedora:40
@@ -27,11 +26,3 @@ RUN dnf -y update && \
 
 COPY src/requirements.txt /tmp/requirements.txt
 RUN pip install -r /tmp/requirements.txt
-
-#COPY src /tmp_project/src
-#WORKDIR /tmp_project/src
-
-#ENV PYTHONPATH /tmp_project
-
-#RUN ./manage.py create-db
-#RUN rm -rf /src

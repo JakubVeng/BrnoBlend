@@ -1,19 +1,19 @@
 ---
 # run this playbook with:
-# ansible-playbook -i "$nginx_server_name," ./prepare-s390x-builder-to-create-images.yml \
+# ansible-playbook -i "$nginx_server_name," ./play-deploy.yml \
 #   --private-key ./brno-blend-key.pem -u ec2-user
 
 - name: Deploy BrnoBlend to production
   hosts: all
-  become: true
-  user: root
 
   vars:
-    ec2_user: ec2-user
+    ec2_user: ubuntu
     nginx_server_name: 3.79.116.184
+    repo_dest: "/home/{{ ec2_user }}/brno-blend"
 
   tasks:
     - name: Install tools for server to be able to run web service
+      become: true
       package:
         state: present
         name:
@@ -24,6 +24,7 @@
           - nginx
 
     - name: Install debug tools
+      become: true
       package:
         state: present
         name:
@@ -32,19 +33,20 @@
 
     - name: Check if the git repo exists
       stat:
-        path: "/opt/brno-blend"
+        path: "{{ repo_dest }}"
       register: repo_dir
 
     - name: Clone or update git repository
       git:
         repo: "https://github.com/JakubVeng/BrnoBlend.git"
-        dest: "/opt/brno-blend"
+        dest: "{{ repo_dest }}"
         version: "main"
         force: true
       notify:
         - Restart application if necessary
 
     - name: Ensure nginx service is running
+      become: true
       service:
         name: nginx
         state: started
@@ -52,6 +54,7 @@
         masked: false
 
     - name: Template nginx file
+      become: true
       template:
         src: "nginx.conf.j2"
         dest: "/etc/nginx/sites-enabled/brno-blend-nginx.conf"
@@ -61,11 +64,12 @@
   handlers:
     - name: Restart application if necessary
       command:
-        cmd: "make restart"
-        chdir: "/opt/brno-blend"
+        cmd: "make restart-app"
+        chdir: "{{ repo_dest }}"
       when: repo_dir.stat.exists
 
     - name: Restart nginx
+      become: true
       service:
         name: nginx
         state: restarted

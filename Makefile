@@ -8,7 +8,7 @@ COMPOSE ?= $(shell command -v podman-compose 2> /dev/null || echo docker-compose
 
 # regenerate new image when needed
 build-base-image:
-	$(CONTAINER_ENGINE) build --rm --tag $(IMAGE_NAME) -f ./docker/Containerfile
+	$(CONTAINER_ENGINE) build --rm --tag $(IMAGE_NAME) -f ./deployement/Containerfile
 
 
 enter-container:

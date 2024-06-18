@@ -1,12 +1,10 @@
-# only for local development
-
 version: "3"
 
 services:
   web:
     build:
       context: .
-      dockerfile: docker/Containerfile
+      dockerfile: deployement/Containerfile
     container_name: brnoblend_web
     hostname: web
     command: "uvicorn src.app.api:app --host 0.0.0.0 --port 5020 --reload"

@@ -108,15 +108,21 @@ async def get_results(
             "%d.%m.%Y"
         )
 
+    def eval_event_text(event):
+        if event.text_en is None and event.text is None:
+            return "Description unavailable."
+
+        return event.text_en or "Description available only in Czech: " + str(event.text)
+
     # Convert events to dictionaries for the results-map to decode them
     # Filter out only the required fields
     events_dicts = [
         {
             "date_from": event.date_from,
             "date_to": event.date_to,
-            "name": event.name,
-            "categories": event.categories,
-            "text": event.text,
+            "name": html.unescape(event.name_en or event.name),
+            "categories": html.unescape(event.categories),
+            "text": html.unescape(eval_event_text(event)),
             "latitude": event.latitude,
             "longitude": event.longitude,
         }

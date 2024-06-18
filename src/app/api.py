@@ -1,3 +1,4 @@
+from datetime import datetime
 import html
 import logging
 from typing import Optional
@@ -88,6 +89,15 @@ def model_to_dict(obj):
     """
     return {c.key: getattr(obj, c.key) for c in inspect(obj).mapper.column_attrs}
 
+def format_unix_timestamp(timestamp):
+    try:
+        timestamp = int(timestamp)
+        timestamp = timestamp // 1000  # Convert from milliseconds to seconds
+        return datetime.utcfromtimestamp(timestamp).strftime('%Y-%m-%d %H:%M')
+    except (ValueError, OverflowError) as e:
+        print(f"Error converting timestamp: {timestamp} - {e}")
+        return None
+
 
 # TODO: yes forms in FastAPI needs to be as post requests. If something breaks or is not working
 # or u think u can do better, replace <form> in html with javascript to create form and
@@ -108,6 +118,9 @@ async def get_results(
     # Format the html-encoded titles...
     for event in events:
         event.name = html.unescape(event.name)
+        event.date_from = datetime.utcfromtimestamp(int(event.date_from) // 1000).strftime('%d.%m.%Y')
+        event.date_to = datetime.utcfromtimestamp(int(event.date_to) // 1000).strftime('%d.%m.%Y')
+        print(event.date_from)
 
     # Convert events to dictionaries for the #results-map to decode them
     events_dicts = [model_to_dict(event) for event in events]

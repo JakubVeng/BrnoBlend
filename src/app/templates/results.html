@@ -80,12 +80,12 @@
 
 <!-- Embedding the events data into a JavaScript variable -->
 <script>
-  const eventsData = "{{ events | tojson | safe }}";
+  const eventsData = '{{ events | tojson | safe }}';
 </script>
 
 <script src="/static/js/results.js"></script>
 <script
-  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmXMSNnE2IreFJTG6rQefzqANnmhBeNWY&callback=initMaps"
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDmXMSNnE2IreFJTG6rQefzqANnmhBeNWY&loading=async&callback=initMaps"
   async
   defer
 ></script>

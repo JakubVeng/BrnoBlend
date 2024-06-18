@@ -110,7 +110,7 @@ async def get_results(
 
     def eval_event_text(event):
         if event.text_en is None and event.text is None:
-            return "Description unavailable."
+            return "Description unavailable 🙁"
 
         return event.text_en or "Description available only in Czech: " + str(event.text)
 

@@ -48,8 +48,13 @@
         dest: "/etc/systemd/system/brno-blend.service"
         force: true
       when: git_result.changed
+
+    - name: Reload systemd
+      become: true
+      service:
+        daemon_reload: true
       notify:
-        - Reload systemd if necessary
+        - Restart application if necessary
 
     - name: Ensure nginx service is running
       become: true
@@ -67,16 +72,18 @@
       notify:
         - Restart nginx
 
-  handlers:
-    - name: Reload systemd if necessary
-      become: true
-      systemd:
-        daemon_reload: true
-      notify:
-        - Restart application if necessary
+    - name: Ensure brno-blend service is running
+      service:
+        scope: user
+        name: brno-blend
+        state: started
+        enabled: true
+        masked: false
 
+  handlers:
     - name: Restart application if necessary
-      systemd:
+      service:
+        scope: user
         name: brno-blend
         state: restarted
 

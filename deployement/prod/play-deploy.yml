@@ -64,7 +64,7 @@
   handlers:
     - name: Restart application if necessary
       command:
-        cmd: "make restart"
+        cmd: "make restart-app"
         chdir: "{{ repo_dest }}"
       when: repo_dir.stat.exists
 

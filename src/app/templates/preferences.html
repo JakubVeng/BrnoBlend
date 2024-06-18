@@ -4,6 +4,12 @@
   <h1>Tell Us About Your Preferences</h1>
   <form id="preferenceForm" action="/results" method="post">
     <div class="mb-3">
+      <div class="form-check">
+        <input class="form-check-input" type="checkbox" id="selectAllCategories">
+        <label class="form-check-label" for="selectAllCategories">
+          Select All Categories
+        </label>
+      </div>
       <label for="categories" class="form-label">Select categories you're interested in</label>
       <select id="categories" class="form-select" name="categories" multiple required>
         {% for category in categories %}
@@ -25,6 +31,28 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
+    const selectAllCheckbox = document.getElementById('selectAllCategories');
+    const categoriesSelect = document.getElementById('categories');
+
+    // Function to update the state of the "Select All" checkbox based on the options selected
+    const updateSelectAllCheckboxState = () => {
+      const allOptions = categoriesSelect.options;
+      const selectedOptions = Array.from(allOptions).filter(option => option.selected);
+      selectAllCheckbox.checked = selectedOptions.length === allOptions.length;
+    };
+
+    selectAllCheckbox.addEventListener('change', (e) => {
+      const isChecked = e.target.checked;
+      for (let option of categoriesSelect.options) {
+        option.selected = isChecked;
+      }
+    });
+
+    // Add event listener to the categories select element to handle manual selection
+    categoriesSelect.addEventListener('change', () => {
+      updateSelectAllCheckboxState();
+    });
+
     const form = document.getElementById('preferenceForm');
     const requiredFields = form.querySelectorAll('select[required], input[required]');
 
@@ -52,9 +80,6 @@
         alert("All fields must be filled out before submitting.");
       }
     });
-
-    // Initial validation (if needed)
-    // validateForm();
   });
 </script>
 {% endblock %}

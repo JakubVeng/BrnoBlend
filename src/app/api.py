@@ -119,7 +119,7 @@ async def get_results(
     events_dicts = [
         {
             "date_from": event.date_from,
-            "date_to": event.date_to,
+            "date_to": "-" if event.date_to == "31.12.2050" else event.date_to,
             "name": html.unescape(event.name_en or event.name),
             "categories": html.unescape(event.categories_en),
             "text": html.unescape(eval_event_text(event)),

@@ -20,7 +20,7 @@ class Preferencator3000:
                 category_filters = []
                 for category in self.preferences.categories:
                     category_filters.append(
-                        EventModel.categories.ilike(f"%{category}%")
+                        EventModel.categories_en.ilike(f"%{category}%")
                     )
 
                 # Combine all category filters with "OR" logic

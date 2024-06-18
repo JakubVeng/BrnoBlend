@@ -121,7 +121,7 @@ async def get_results(
             "date_from": event.date_from,
             "date_to": event.date_to,
             "name": html.unescape(event.name_en or event.name),
-            "categories": html.unescape(event.categories),
+            "categories": html.unescape(event.categories_en),
             "text": html.unescape(eval_event_text(event)),
             "latitude": event.latitude,
             "longitude": event.longitude,

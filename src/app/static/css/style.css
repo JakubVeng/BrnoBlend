@@ -82,7 +82,8 @@ p {
 
 #menu #logo {
   height: 50px;
-  filter: invert(100%) sepia(96%) saturate(15%) hue-rotate(212deg) brightness(300%);
+  filter: invert(100%) sepia(96%) saturate(15%) hue-rotate(212deg)
+    brightness(300%);
 }
 
 #menu .navbar-brand {

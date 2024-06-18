@@ -1,7 +1,9 @@
 from sqlalchemy import or_
-from src.app.db.models import EventModel  # Adjust import as per your actual model
+
 from src.app.db.db import sa_session_transaction  # Adjust import as per your setup
+from src.app.db.models import EventModel  # Adjust import as per your actual model
 from src.app.schema import Event, PreferencesForm  # Adjust import as per your setup
+
 
 # Simple preferences matching for testing, change as u like
 class Preferencator3000:
@@ -15,8 +17,10 @@ class Preferencator3000:
             if self.preferences and self.preferences.categories:
                 category_filters = []
                 for category in self.preferences.categories:
-                    category_filters.append(EventModel.categories.ilike(f"%{category}%"))
-                
+                    category_filters.append(
+                        EventModel.categories.ilike(f"%{category}%")
+                    )
+
                 # Combine all category filters with "OR" logic
                 query = query.filter(or_(*category_filters))
 

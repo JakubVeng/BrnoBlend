@@ -31,7 +31,8 @@ def parse_event(event: dict) -> dict:
         "coordinates_0": geometry["coordinates"][0],
         "coordinates_1": geometry["coordinates"][1],
     }
-    
+
+
 def get_events(url: str = DATA_URL_DOWNLOAD) -> list[dict]:
     response = requests.get(url)
     response.raise_for_status()

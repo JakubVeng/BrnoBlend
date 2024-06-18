@@ -11,7 +11,7 @@ from fastapi.templating import Jinja2Templates
 from src.app.db.data_loader import get_events
 from src.app.db.db import sa_session_transaction
 from src.app.db.models import EventModel
-from src.app.preferences import Preferencator3000
+from src.app.preferences import Preferencator3000, SemanticSearchEngine
 from src.app.schema import PreferencesForm
 
 logger = logging.getLogger(__name__)
@@ -94,7 +94,7 @@ async def get_results(
     limit: int = Form(...),
 ):
     preferences_form = PreferencesForm(categories=categories, date=date, limit=limit)
-    matcher = Preferencator3000(preferences_form)
+    matcher = SemanticSearchEngine(preferences_form)
 
     events = matcher.match_events()
 
@@ -121,7 +121,7 @@ async def get_results(
             "date_from": event.date_from,
             "date_to": "-" if event.date_to == "31.12.2050" else event.date_to,
             "name": html.unescape(event.name_en or event.name),
-            "categories": html.unescape(event.categories_en),
+            "categories": html.unescape(event.categories_en) if event.categories_en else event.categories_en,
             "text": html.unescape(eval_event_text(event)),
             "latitude": event.latitude,
             "longitude": event.longitude,

@@ -10,6 +10,7 @@ requests
 psycopg2-binary
 python-multipart
 deep_translator
+scikit-learn
 
 # dev dependencies
 click

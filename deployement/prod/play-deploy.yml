@@ -8,7 +8,7 @@
 
   vars:
     ec2_user: ubuntu
-    nginx_server_name: 3.79.116.184
+    nginx_server_name: 18.199.89.155
     repo_dest: "/home/{{ ec2_user }}/brno-blend"
 
   tasks:

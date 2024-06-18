@@ -4,7 +4,7 @@
 2. Run the deploy playbook via ansible:
 
 ```bash
-$ ansible-playbook -i "<AWS_MACHINE_IP>," ./prod/play-deploy.yml --private-key key.pem -u <EC2_USER>
+$ ansible-playbook -i "<AWS_MACHINE_IP>," ./prod/play-deploy.yml --private-key <key-location.pem> -u ubuntu
 ```
 
 3. Enjoy

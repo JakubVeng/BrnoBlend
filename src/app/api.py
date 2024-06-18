@@ -62,11 +62,11 @@ def update_events():
 
 
 def get_categories_from_db(db_session):
-    categories = db_session.query(EventModel.categories).distinct().all()
+    categories = db_session.query(EventModel.categories_en).distinct().all()
     unique_categories = set()
     for category in categories:
-        if category.categories:
-            unique_categories.update(category.categories.split(", "))
+        if category.categories_en:
+            unique_categories.update(category.categories_en.split(", "))
     return sorted(list(unique_categories))
 
 

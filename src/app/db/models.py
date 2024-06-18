@@ -2,6 +2,7 @@ from typing import TYPE_CHECKING, Optional
 
 from sqlalchemy import Column, Float, Integer, String, Text
 from sqlalchemy.ext.declarative import declarative_base
+from deep_translator import GoogleTranslator
 
 from src.app.db.db import sa_session_transaction
 
@@ -10,6 +11,11 @@ if TYPE_CHECKING:
 else:
     Base = declarative_base()
 
+def translate(text):
+    if text is None or len(text) == 0:
+        return None
+
+    return GoogleTranslator(source='auto', target='en').translate(text)
 
 # description of attributes is here
 # https://data.brno.cz/datasets/mestobrno::akce-events/about
@@ -27,6 +33,7 @@ class EventModel(Base):
     image_url = Column(String)
     event_url = Column(String)
     categories = Column(String)
+    categories_en = Column(String)
     latitude = Column(Float)
     longitude = Column(Float)
     date_from = Column(String)
@@ -83,6 +90,7 @@ class EventModel(Base):
             event.image_url = image_url
             event.event_url = event_url
             event.categories = categories
+            event.categories_en = translate(categories)
             event.parent_festivals_url = parent_festivals_url
             event.organizer_email = organizer_email
             event.tickets_url = tickets_url

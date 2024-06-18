@@ -1,5 +1,6 @@
 from datetime import datetime, timezone
-from sqlalchemy import Integer, Numeric, cast, func, or_
+
+from sqlalchemy import Numeric, cast, or_
 
 from src.app.db.db import sa_session_transaction  # Adjust import as per your setup
 from src.app.db.models import EventModel  # Adjust import as per your actual model
@@ -30,10 +31,12 @@ class Preferencator3000:
 
             if self.preferences and self.preferences.date:
                 # Convert self.preferences.date string to datetime object
-                date_obj = datetime.strptime(self.preferences.date, '%Y-%m-%d')
+                date_obj = datetime.strptime(self.preferences.date, "%Y-%m-%d")
 
                 # Convert date_obj to milliseconds since epoch
-                date_timestamp = int(date_obj.replace(tzinfo=timezone.utc).timestamp() * 1000)
+                date_timestamp = int(
+                    date_obj.replace(tzinfo=timezone.utc).timestamp() * 1000
+                )
 
                 # Cast EventModel.date_from and date_to to Numeric for precise comparison
                 date_from_casted = cast(EventModel.date_from, Numeric)
